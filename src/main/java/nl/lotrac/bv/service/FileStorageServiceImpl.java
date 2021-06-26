@@ -45,15 +45,19 @@ public class FileStorageServiceImpl {
         return fileDBRepository.findAll().stream();
     }
 
+
+
+ @Transactional
+public  void  deleteFileById(String id){
+
+
+fileDBRepository.deleteById(id);
+
 }
 
-//@
-// @Transactional
-//public  void  deleteFileById(String id){
-//
-//    fileDBRepository.deleteFileById(id);
-//
-//
-//}
+
+
+
+}
 
 

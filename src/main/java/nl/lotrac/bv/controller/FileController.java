@@ -27,13 +27,13 @@ import nl.lotrac.bv.model.FileDB;
 public class FileController {
 
     @Autowired
-    private FileStorageServiceImpl fileStorageService;
+    private FileStorageServiceImpl fileStorageServiceImpl;
 
     @PostMapping("/upload")
     public ResponseEntity<ResponseMessage> uploadFile(@RequestParam("file") MultipartFile file) {
         String message = "";
         try {
-            fileStorageService.store(file);
+            fileStorageServiceImpl.store(file);
 
             message = "Uploaded the file successfully: " + file.getOriginalFilename();
             return ResponseEntity.status(HttpStatus.OK).body(new ResponseMessage(message));
@@ -45,18 +45,21 @@ public class FileController {
 
     @GetMapping("/files")
     public ResponseEntity<List<ResponseFile>> getListFiles() {
-        List<ResponseFile> files = fileStorageService.getAllFiles().map(dbFile -> {
+        List<ResponseFile> files = fileStorageServiceImpl.getAllFiles().map(dbFile -> {
             String fileDownloadUri = ServletUriComponentsBuilder
+//                    hieronder wordt eea toegevoegd o.a.
                     .fromCurrentContextPath()
                     .path("/files/")
                     .path(dbFile.getId())
                     .toUriString();
 
             return new ResponseFile(
+                    dbFile.getId(),
                     dbFile.getName(),
                     fileDownloadUri,
                     dbFile.getType(),
-                    dbFile.getData().length);
+                    dbFile.getData().length
+            );
         }).collect(Collectors.toList());
 
         return ResponseEntity.status(HttpStatus.OK).body(files);
@@ -64,8 +67,8 @@ public class FileController {
 
     @GetMapping("/files/{id}")
     public ResponseEntity<byte[]> getFile(@PathVariable String id) {
-        FileDB fileDB = fileStorageService.getFile(id);
-        log.debug("fileDB: " + fileDB);
+        FileDB fileDB = fileStorageServiceImpl.getFile(id);
+
 
 
         return ResponseEntity.ok()
@@ -77,13 +80,13 @@ public class FileController {
 
 
 
-//    @DeleteMapping(value="/files/{id}")
-//    public ResponseEntity<Object>deleteFileById(@PathVariable("id")String id) {
-//        storageService.deleteFileById(id);
-//        return ResponseEntity.noContent().build();
-//
-//
-//    }
+    @DeleteMapping(value="/files/{id}")
+    public ResponseEntity<Object>deleteFileById(@PathVariable("id")String id) {
+        fileStorageServiceImpl.deleteFileById(id);
+        return ResponseEntity.noContent().build();
+
+
+    }
 
 
 
