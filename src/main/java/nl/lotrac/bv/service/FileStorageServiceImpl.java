@@ -17,7 +17,7 @@ import nl.lotrac.bv.repository.FileDBRepository;
 @Slf4j
 
 @Service
-public class FileStorageService {
+public class FileStorageServiceImpl {
 
     @Autowired
     private FileDBRepository fileDBRepository;
@@ -47,13 +47,13 @@ public class FileStorageService {
 
 }
 
-@
- @Transactional
-public  void  deleteFileById(String id){
-
-    fileDBRepository.deleteFileById(id);
-
-
-}
+//@
+// @Transactional
+//public  void  deleteFileById(String id){
+//
+//    fileDBRepository.deleteFileById(id);
+//
+//
+//}
 
 
