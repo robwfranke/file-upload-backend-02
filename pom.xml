@@ -8,11 +8,11 @@
 		<version>2.5.1</version>
 		<relativePath/> <!-- lookup parent from repository -->
 	</parent>
-	<groupId>file-upload-backend-01</groupId>
-	<artifactId>file-upload-backend-01</artifactId>
+	<groupId>file-upload-backend-02</groupId>
+	<artifactId>file-upload-backend-02</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
-	<name>file-upload-backend-01</name>
-	<description>file-upload-backend-01</description>
+	<name>file-upload-backend-02</name>
+	<description>file-upload-backend-02</description>
 	<properties>
 		<java.version>11</java.version>
 	</properties>

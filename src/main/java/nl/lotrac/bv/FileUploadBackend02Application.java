@@ -9,10 +9,10 @@ import org.springframework.boot.autoconfigure.security.servlet.SecurityAutoConfi
 
 
 
-public class FileUploadBackend01Application {
+public class FileUploadBackend02Application {
 
 	public static void main(String[] args) {
-		SpringApplication.run(FileUploadBackend01Application.class, args);
+		SpringApplication.run(FileUploadBackend02Application.class, args);
 	}
 
 }

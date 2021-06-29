@@ -12,7 +12,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
-
 import nl.lotrac.bv.service.FileStorageServiceImpl;
 import nl.lotrac.bv.message.ResponseMessage;
 import nl.lotrac.bv.message.ResponseFile;
@@ -22,6 +21,7 @@ import nl.lotrac.bv.model.FileDB;
 
 @CrossOrigin(origins = "*", maxAge = 3600)
 @RestController
+@RequestMapping(value="/file")
 
 @Slf4j
 public class FileController {
@@ -49,7 +49,7 @@ public class FileController {
             String fileDownloadUri = ServletUriComponentsBuilder
 //                    hieronder wordt eea toegevoegd o.a.
                     .fromCurrentContextPath()
-                    .path("/files/")
+                    .path("/file/files/")
                     .path(dbFile.getId())
                     .toUriString();
 
