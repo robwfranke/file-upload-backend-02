@@ -7,6 +7,7 @@ import java.util.stream.Collectors;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpRequest;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -17,11 +18,12 @@ import nl.lotrac.bv.message.ResponseMessage;
 import nl.lotrac.bv.message.ResponseFile;
 import nl.lotrac.bv.model.FileDB;
 
+import javax.servlet.http.HttpServletRequest;
 
 
 @CrossOrigin(origins = "*", maxAge = 3600)
 @RestController
-@RequestMapping(value="/file")
+@RequestMapping(value = "/file")
 
 @Slf4j
 public class FileController {
@@ -47,10 +49,10 @@ public class FileController {
     public ResponseEntity<List<ResponseFile>> getListFiles() {
         List<ResponseFile> files = fileStorageServiceImpl.getAllFiles().map(dbFile -> {
             String fileDownloadUri = ServletUriComponentsBuilder
-//                    hieronder wordt eea toegevoegd o.a.
-                    .fromCurrentContextPath()
-                    .path("/file/files/")
-                    .path(dbFile.getId())
+
+//                    voeg de pathname van het huidige request to en voeg een / toe!!!
+                    .fromCurrentRequest()
+                    .path("/" + dbFile.getId())
                     .toUriString();
 
             return new ResponseFile(
@@ -70,7 +72,6 @@ public class FileController {
         FileDB fileDB = fileStorageServiceImpl.getFile(id);
 
 
-
         return ResponseEntity.ok()
                 .header(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=\"" + fileDB.getName() + "\"")
                 .body(fileDB.getData());
@@ -79,18 +80,13 @@ public class FileController {
     }
 
 
-
-    @DeleteMapping(value="/files/{id}")
-    public ResponseEntity<Object>deleteFileById(@PathVariable("id")String id) {
+    @DeleteMapping(value = "/files/{id}")
+    public ResponseEntity<Object> deleteFileById(@PathVariable("id") String id) {
         fileStorageServiceImpl.deleteFileById(id);
         return ResponseEntity.noContent().build();
 
 
     }
-
-
-
-
 
 
 }
